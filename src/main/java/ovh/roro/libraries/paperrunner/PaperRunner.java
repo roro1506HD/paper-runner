@@ -11,6 +11,7 @@ import kong.unirest.core.Unirest;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
@@ -111,11 +112,11 @@ public class PaperRunner {
 
                 try (
                         BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(PaperRunner.class.getResourceAsStream("/start.sh"))));
-                        BufferedWriter writer = Files.newBufferedWriter(startScript)
+                        PrintWriter writer = new PrintWriter(Files.newBufferedWriter(startScript))
                 ) {
                     String line;
                     while ((line = reader.readLine()) != null) {
-                        writer.write(line.replace("%%VERSION%%", version));
+                        writer.println(line.replace("%%VERSION%%", version));
                     }
                 }
 
